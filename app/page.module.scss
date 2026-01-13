@@ -1,0 +1,44 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f5f9f5;
+  color: #333;
+}
+
+.header {
+  background: linear-gradient(135deg, #21A038 0%, #1A8030 100%);
+  color: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+}
+
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
+.footer {
+  background-color: #e9ecef;
+  color: #6c757d;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.9rem;
+  border-top: 1px solid #dee2e6;
+}

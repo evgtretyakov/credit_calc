@@ -1,0 +1,21 @@
+enableStrictSsl: false
+
+nodeLinker: node-modules
+
+npmRegistryServer: 'https://sberosc.sigma.sbrf.ru/repo/npm'
+npmAuthToken: 'ТОКЕН ДЛЯ SBEROSC В КАВЫЧКАХ'
+npmAlwaysAuth: true
+unsafeHttpWhitelist: 'sberosc.sigma.sbrf.ru'
+checksumBehavior: update
+
+npmScopes:
+  'sber':
+    npmAlwaysAuth: true
+    npmRegistryServer: 'https://nexus-ci.delta.sbrf.ru/repository/npm-sigma-proxy-int/'
+    npmAuthToken: 'ТОКЕН ДЛЯ NEXUS В КАВЫЧКАХ'
+  'sber-CI03878175-CI03104978':
+    npmAlwaysAuth: true
+    npmRegistryServer: 'https://nexus-ci.delta.sbrf.ru/repository/npm-dev/'
+    npmAuthIdent: 'ТОКЕН ДЛЯ NEXUS В КАВЫЧКАХ'
+
+yarnPath: .yarn/releases/yarn-3.3.1.cjs
