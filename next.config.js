@@ -4,6 +4,10 @@ const nextConfig = {
   sassOptions: {
     includePaths: ['./styles'],
   },
+  output: 'export',  // ключевая настройка
+  images: {
+    unoptimized: true,  // если используешь next/image
+  },
 }
 
 module.exports = nextConfig
