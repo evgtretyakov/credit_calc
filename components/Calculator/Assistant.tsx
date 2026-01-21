@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './Calculator.module.scss'
+import { calculateRecommendedPayment } from '@/utils/assistant'
 
 interface AssistantProps {
   salary: number
@@ -14,9 +15,12 @@ const Assistant: React.FC<AssistantProps> = ({
   livingMinimum,
   otherPayments,
 }) => {
-  const adjustedSalary = hasEnforcement ? salary / 2 : salary
-  const available = adjustedSalary - livingMinimum - otherPayments
-  const recommendedPayment = Math.max(0, available)
+  const { adjustedSalary, recommendedPayment } = calculateRecommendedPayment({
+    salary,
+    hasEnforcement,
+    livingMinimum,
+    otherPayments,
+  })
 
   return (
     <div className={styles.assistant}>

@@ -6,6 +6,7 @@ import ResultsTable from './ResultsTable'
 import Assistant from './Assistant'
 import StatementModal from '../Statement/StatementModal'
 import styles from './Calculator.module.scss'
+import { calculateSchedule, calculateAveragePaymentAfterDeferral, type ScheduleItem } from '@/utils/calculator'
 
 export default function Calculator() {
   // Данные по кредиту
@@ -21,62 +22,22 @@ export default function Calculator() {
   const [hasEnforcement, setHasEnforcement] = useState<boolean>(false) // Наличие возбужденных производств у пристава
 
   // Результаты расчета
-  const [paymentSchedule, setPaymentSchedule] = useState<any[]>([])
+  const [paymentSchedule, setPaymentSchedule] = useState<ScheduleItem[]>([])
   const [isStatementModalOpen, setIsStatementModalOpen] = useState<boolean>(false)
 
   // Расчет платежей
   useEffect(() => {
-    calculateSchedule()
-  }, [principal, interestRate, penalty, remainingTerm, defermentMonths, minRepaymentPercent, salaryTransfer])
-
-  const calculateSchedule = () => {
-    const schedule = []
-    let balance = principal
-    const monthlyRate = interestRate / 100 / 12
-    const totalMonths = remainingTerm + defermentMonths
-    const adjustedRate = salaryTransfer ? monthlyRate - 0.005 / 12 : monthlyRate // снижение ставки на 0.5% годовых
-
-    for (let month = 1; month <= totalMonths; month++) {
-      const interest = balance * adjustedRate
-      let principalPayment = 0
-      let totalPayment = 0
-
-      if (month <= defermentMonths) {
-        // период отсрочки
-        principalPayment = 0
-        totalPayment = interest
-      } else {
-        // после отсрочки
-        const remainingAfterDefer = totalMonths - defermentMonths
-        principalPayment = balance / remainingAfterDefer
-        totalPayment = interest + principalPayment
-        // применяем минимальный размер погашения
-        if (minRepaymentPercent > 0) {
-          const minPrincipal = balance * (minRepaymentPercent / 100)
-          if (principalPayment < minPrincipal) {
-            principalPayment = minPrincipal
-            totalPayment = interest + principalPayment
-          }
-        }
-      }
-
-      balance -= principalPayment
-      if (balance < 0) balance = 0
-
-      const totalWithPenalty = totalPayment + (penalty / totalMonths)
-
-      schedule.push({
-        month,
-        interest: Math.round(interest),
-        principal: Math.round(principalPayment),
-        total: Math.round(totalPayment),
-        balance: Math.round(balance),
-        totalWithPenalty: Math.round(totalWithPenalty),
-      })
-    }
-
+    const schedule = calculateSchedule({
+      principal,
+      interestRate,
+      penalty,
+      remainingTerm,
+      defermentMonths,
+      minRepaymentPercent,
+      salaryTransfer,
+    })
     setPaymentSchedule(schedule)
-  }
+  }, [principal, interestRate, penalty, remainingTerm, defermentMonths, minRepaymentPercent, salaryTransfer])
 
   const handleReset = () => {
     setPrincipal(678000)
@@ -98,14 +59,7 @@ export default function Calculator() {
   }
 
   // Вычисляем средний платеж после отсрочки
-  const averagePaymentAfterDeferral = paymentSchedule.length > 0
-    ? Math.round(
-        paymentSchedule
-          .filter(item => item.month > defermentMonths)
-          .reduce((sum, item) => sum + item.total, 0) /
-        Math.max(1, paymentSchedule.length - defermentMonths)
-      )
-    : 0
+  const averagePaymentAfterDeferral = calculateAveragePaymentAfterDeferral(paymentSchedule, defermentMonths)
 
   return (
     <div className={styles.calculator}>

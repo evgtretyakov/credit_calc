@@ -1,0 +1,364 @@
+.calculator {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  padding: 2rem;
+}
+@media (max-width: 768px) {
+  .calculator {
+    padding: 1.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .calculator {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2rem;
+}
+@media (max-width: 1024px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 768px) {
+  .grid {
+    gap: 1.5rem;
+  }
+}
+@media (max-width: 480px) {
+  .grid {
+    gap: 1rem;
+  }
+}
+
+.leftPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.rightPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.inputSection h2 {
+  color: #21A038;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #e9ecef;
+  padding-bottom: 0.5rem;
+}
+.inputSection h2:first-child {
+  margin-top: 0;
+}
+@media (max-width: 768px) {
+  .inputSection h2 {
+    font-size: 1.3rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+}
+@media (max-width: 480px) {
+  .inputSection h2 {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.inputGroup label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #495057;
+}
+.inputGroup label input[type=number] {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #ced4da;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+.inputGroup label input[type=number]:focus {
+  outline: none;
+  border-color: #21A038;
+  box-shadow: 0 0 0 3px rgba(33, 160, 56, 0.25);
+}
+.inputGroup .checkboxLabel {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+}
+.inputGroup .checkboxLabel input[type=checkbox] {
+  width: 1.2rem;
+  height: 1.2rem;
+  accent-color: #21A038;
+}
+.inputGroup .checkboxLabel span {
+  font-weight: normal;
+}
+@media (max-width: 768px) {
+  .inputGroup {
+    gap: 1rem;
+  }
+  .inputGroup label input[type=number] {
+    padding: 0.65rem 0.9rem;
+    font-size: 0.95rem;
+  }
+  .inputGroup .checkboxLabel {
+    gap: 0.6rem;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 480px) {
+  .inputGroup {
+    gap: 0.8rem;
+  }
+  .inputGroup label input[type=number] {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+  .inputGroup .checkboxLabel {
+    gap: 0.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+.buttonReset {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.buttonReset:hover {
+  background-color: #5a6268;
+}
+
+.resultsTable h2 {
+  color: #21A038;
+  margin-bottom: 1rem;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid #dee2e6;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  -webkit-overflow-scrolling: touch;
+}
+.tableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+}
+.tableContainer table thead {
+  background-color: #f8f9fa;
+}
+.tableContainer table th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+.tableContainer table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+}
+.tableContainer table tbody tr:hover {
+  background-color: #f8f9fa;
+}
+@media (max-width: 768px) {
+  .tableContainer table {
+    min-width: 700px;
+  }
+  .tableContainer table th {
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+  .tableContainer table td {
+    padding: 0.6rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 480px) {
+  .tableContainer table {
+    min-width: 550px;
+  }
+  .tableContainer table th {
+    padding: 0.6rem;
+    font-size: 0.85rem;
+  }
+  .tableContainer table td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85rem;
+  }
+}
+@media (max-width: 360px) {
+  .tableContainer table {
+    min-width: 500px;
+  }
+}
+
+.tableNote {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+.noData {
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+}
+
+.assistant {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border-left: 4px solid #20c997;
+}
+.assistant h3 {
+  color: #198754;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.assistantContent p {
+  margin: 0.5rem 0;
+}
+.assistantContent .warning {
+  color: #dc3545;
+  font-weight: 500;
+  background-color: #ffeaea;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.recommendation {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #adb5bd;
+}
+.recommendation h4 {
+  color: #21A038;
+  margin-bottom: 0.5rem;
+}
+
+.recommendedAmount {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #198754;
+  margin: 0.5rem 0;
+}
+@media (max-width: 768px) {
+  .recommendedAmount {
+    font-size: 1.75rem;
+  }
+}
+@media (max-width: 480px) {
+  .recommendedAmount {
+    font-size: 1.5rem;
+  }
+}
+
+.note {
+  font-size: 0.9rem;
+  color: #6c757d;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+@media (max-width: 768px) {
+  .actions {
+    flex-direction: column;
+  }
+}
+
+.buttonPrimary {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(135deg, #21A038 0%, #1A8030 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.buttonPrimary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(33, 160, 56, 0.3);
+}
+@media (max-width: 768px) {
+  .buttonPrimary {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 480px) {
+  .buttonPrimary {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+.buttonSecondary {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  background-color: white;
+  color: #21A038;
+  border: 2px solid #21A038;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.buttonSecondary:hover {
+  background-color: #e8f5e9;
+}
+@media (max-width: 768px) {
+  .buttonSecondary {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 480px) {
+  .buttonSecondary {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+/*# sourceMappingURL=Calculator.module.css.map */

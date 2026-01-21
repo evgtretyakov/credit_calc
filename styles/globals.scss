@@ -41,3 +41,20 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 auto;
   padding: 0 $spacer;
 }
+
+// Медиа-запросы для мобильных устройств
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13px;
+  }
+}

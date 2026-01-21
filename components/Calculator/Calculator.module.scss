@@ -4,6 +4,15 @@
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   padding: 2rem;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+    border-radius: 12px;
+  }
 }
 
 .grid {
@@ -13,6 +22,14 @@
 
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
+  }
+
+  @media (max-width: 768px) {
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    gap: 1rem;
   }
 }
 
@@ -39,6 +56,22 @@
 
     &:first-child {
       margin-top: 0;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: 1.3rem;
+      margin-top: 1.2rem;
+      margin-bottom: 0.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 1.2rem;
+      margin-top: 1rem;
+      margin-bottom: 0.75rem;
     }
   }
 }
@@ -86,6 +119,34 @@
       font-weight: normal;
     }
   }
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+
+    label input[type="number"] {
+      padding: 0.65rem 0.9rem;
+      font-size: 0.95rem;
+    }
+
+    .checkboxLabel {
+      gap: 0.6rem;
+      font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.8rem;
+
+    label input[type="number"] {
+      padding: 0.6rem 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .checkboxLabel {
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+  }
 }
 
 .buttonReset {
@@ -115,6 +176,10 @@
   overflow-x: auto;
   border-radius: 8px;
   border: 1px solid #dee2e6;
+  width: 100%;
+  max-width: 100%;
+  display: block;
+  -webkit-overflow-scrolling: touch;
 
   table {
     width: 100%;
@@ -140,6 +205,44 @@
 
     tbody tr:hover {
       background-color: #f8f9fa;
+    }
+  }
+
+  @media (max-width: 768px) {
+    table {
+      min-width: 700px;
+
+      th {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+      }
+
+      td {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  @media (max-width: 480px) {
+    table {
+      min-width: 550px;
+
+      th {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+      }
+
+      td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  @media (max-width: 360px) {
+    table {
+      min-width: 500px;
     }
   }
 }
@@ -201,6 +304,14 @@
   font-weight: 700;
   color: #198754;
   margin: 0.5rem 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 }
 
 .note {
@@ -234,6 +345,16 @@
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(33, 160, 56, 0.3);
   }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
+  }
 }
 
 .buttonSecondary {
@@ -250,5 +371,15 @@
 
   &:hover {
     background-color: #e8f5e9;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.9rem 1.2rem;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.8rem 1rem;
+    font-size: 0.9rem;
   }
 }
