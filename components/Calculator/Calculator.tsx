@@ -3,10 +3,19 @@
 import { useState, useEffect } from 'react'
 import InputSection from './InputSection'
 import ResultsTable from './ResultsTable'
+import ComparisonBlock from './ComparisonBlock'
+import ChartComponent from './ChartComponent'
 import Assistant from './Assistant'
 import StatementModal from '../Statement/StatementModal'
 import styles from './Calculator.module.scss'
-import { calculateSchedule, calculateAveragePaymentAfterDeferral, type ScheduleItem } from '@/utils/calculator'
+import {
+  calculateSchedule,
+  calculateAveragePaymentAfterDeferral,
+  calculateAdvancedSchedule,
+  type ScheduleItem,
+  type CalculationScenario,
+  type AdvancedCalculatorParams,
+} from '@/utils/calculator'
 
 export default function Calculator() {
   // Данные по кредиту
@@ -21,11 +30,22 @@ export default function Calculator() {
   const [salaryTransfer, setSalaryTransfer] = useState<boolean>(false) // Галочка "перевести ЗП в Сбер"
   const [hasEnforcement, setHasEnforcement] = useState<boolean>(false) // Наличие возбужденных производств у пристава
 
+  // Новые поля
+  const [issueDate, setIssueDate] = useState<string>(() => new Date().toISOString().split('T')[0])
+  const [endDate, setEndDate] = useState<string>('')
+  const [principalDefermentMonths, setPrincipalDefermentMonths] = useState<number>(1)
+  const [interestDefermentMonths, setInterestDefermentMonths] = useState<number>(1)
+  const [termExtensionMonths, setTermExtensionMonths] = useState<number>(1)
+  const [customTermActive, setCustomTermActive] = useState<boolean>(false)
+  const [customTermMonths, setCustomTermMonths] = useState<number>(0)
+
   // Результаты расчета
   const [paymentSchedule, setPaymentSchedule] = useState<ScheduleItem[]>([])
+  const [scenarios, setScenarios] = useState<CalculationScenario[]>([])
   const [isStatementModalOpen, setIsStatementModalOpen] = useState<boolean>(false)
+  const [showChart, setShowChart] = useState<boolean>(false)
 
-  // Расчет платежей
+  // Расчет платежей (базовый график)
   useEffect(() => {
     const schedule = calculateSchedule({
       principal,
@@ -39,6 +59,43 @@ export default function Calculator() {
     setPaymentSchedule(schedule)
   }, [principal, interestRate, penalty, remainingTerm, defermentMonths, minRepaymentPercent, salaryTransfer])
 
+  // Расчет двух сценариев (базовый и с урегулированием)
+  useEffect(() => {
+    const advancedParams: AdvancedCalculatorParams = {
+      principal,
+      interestRate,
+      penalty,
+      remainingTerm,
+      defermentMonths,
+      minRepaymentPercent,
+      salaryTransfer,
+      issueDate,
+      endDate,
+      principalDefermentMonths,
+      interestDefermentMonths,
+      termExtensionMonths,
+      customTermMonths,
+      customTermActive,
+    }
+    const calculatedScenarios = calculateAdvancedSchedule(advancedParams)
+    setScenarios(calculatedScenarios)
+  }, [
+    principal,
+    interestRate,
+    penalty,
+    remainingTerm,
+    defermentMonths,
+    minRepaymentPercent,
+    salaryTransfer,
+    issueDate,
+    endDate,
+    principalDefermentMonths,
+    interestDefermentMonths,
+    termExtensionMonths,
+    customTermMonths,
+    customTermActive,
+  ])
+
   const handleReset = () => {
     setPrincipal(678000)
     setInterestRate(27.9)
@@ -48,6 +105,14 @@ export default function Calculator() {
     setMinRepaymentPercent(10)
     setSalaryTransfer(false)
     setHasEnforcement(false)
+    // Сброс новых полей
+    setIssueDate(new Date().toISOString().split('T')[0])
+    setEndDate('')
+    setPrincipalDefermentMonths(1)
+    setInterestDefermentMonths(1)
+    setTermExtensionMonths(1)
+    setCustomTermActive(false)
+    setCustomTermMonths(0)
   }
 
   const openStatementModal = () => {
@@ -60,6 +125,13 @@ export default function Calculator() {
 
   // Вычисляем средний платеж после отсрочки
   const averagePaymentAfterDeferral = calculateAveragePaymentAfterDeferral(paymentSchedule, defermentMonths)
+
+  const handleChartToggle = (visible: boolean) => {
+    setShowChart(visible)
+  }
+
+  const baseScenario = scenarios.find(s => s.name === 'Базовый сценарий') || scenarios[0]
+  const settlementScenario = scenarios.find(s => s.name === 'Сценарий с урегулированием') || scenarios[1]
 
   return (
     <div className={styles.calculator}>
@@ -82,6 +154,21 @@ export default function Calculator() {
             setSalaryTransfer={setSalaryTransfer}
             hasEnforcement={hasEnforcement}
             setHasEnforcement={setHasEnforcement}
+            // Новые поля
+            issueDate={issueDate}
+            setIssueDate={setIssueDate}
+            endDate={endDate}
+            setEndDate={setEndDate}
+            principalDefermentMonths={principalDefermentMonths}
+            setPrincipalDefermentMonths={setPrincipalDefermentMonths}
+            interestDefermentMonths={interestDefermentMonths}
+            setInterestDefermentMonths={setInterestDefermentMonths}
+            termExtensionMonths={termExtensionMonths}
+            setTermExtensionMonths={setTermExtensionMonths}
+            customTermActive={customTermActive}
+            setCustomTermActive={setCustomTermActive}
+            customTermMonths={customTermMonths}
+            setCustomTermMonths={setCustomTermMonths}
             onReset={handleReset}
           />
           <Assistant
@@ -92,7 +179,23 @@ export default function Calculator() {
           />
         </div>
         <div className={styles.rightPanel}>
-          <ResultsTable schedule={paymentSchedule} />
+          {scenarios.length >= 2 && (
+            <ComparisonBlock
+              scenario1={baseScenario}
+              scenario2={settlementScenario}
+            />
+          )}
+          <ResultsTable
+            schedule={paymentSchedule}
+            scenarios={scenarios}
+            showChartButton={true}
+            onShowChartToggle={handleChartToggle}
+          />
+          <ChartComponent
+            scenario1Schedule={baseScenario?.schedule || []}
+            scenario2Schedule={settlementScenario?.schedule || []}
+            visible={showChart}
+          />
           <div className={styles.actions}>
             <button className={styles.buttonPrimary} onClick={openStatementModal}>
               Сформировать заявление на реструктуризацию

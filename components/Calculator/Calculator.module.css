@@ -87,7 +87,8 @@
   font-weight: 500;
   color: #495057;
 }
-.inputGroup label input[type=number] {
+.inputGroup label input[type=number],
+.inputGroup label input[type=date] {
   margin-top: 0.5rem;
   padding: 0.75rem 1rem;
   border: 1px solid #ced4da;
@@ -95,10 +96,39 @@
   font-size: 1rem;
   transition: border-color 0.2s;
 }
-.inputGroup label input[type=number]:focus {
+.inputGroup label input[type=number]:focus,
+.inputGroup label input[type=date]:focus {
   outline: none;
   border-color: #21A038;
   box-shadow: 0 0 0 3px rgba(33, 160, 56, 0.25);
+}
+.inputGroup label input[type=range] {
+  margin-top: 0.5rem;
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background: #e9ecef;
+  outline: none;
+  -webkit-appearance: none;
+}
+.inputGroup label input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #21A038;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.inputGroup label input[type=range]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #21A038;
+  cursor: pointer;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .inputGroup .checkboxLabel {
   flex-direction: row;
@@ -359,6 +389,225 @@
     padding: 0.8rem 1rem;
     font-size: 0.9rem;
   }
+}
+
+.comparisonBlock {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+}
+.comparisonBlock h3 {
+  color: #21A038;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+.comparisonBlock .comparisonGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 768px) {
+  .comparisonBlock .comparisonGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+.comparisonBlock .scenarioCard {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e9ecef;
+}
+.comparisonBlock .scenarioCard .scenarioTitle {
+  color: #495057;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+.comparisonBlock .scenarioCard .scenarioDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.comparisonBlock .scenarioCard .detailRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed #e9ecef;
+}
+.comparisonBlock .scenarioCard .detailRow:last-child {
+  border-bottom: none;
+}
+.comparisonBlock .scenarioCard .detailLabel {
+  font-weight: 500;
+  color: #6c757d;
+  font-size: 0.95rem;
+}
+.comparisonBlock .scenarioCard .detailValue {
+  font-weight: 600;
+  color: #21A038;
+  font-size: 1.1rem;
+}
+@media (max-width: 480px) {
+  .comparisonBlock {
+    padding: 1rem;
+  }
+  .comparisonBlock .scenarioCard {
+    padding: 1rem;
+  }
+  .comparisonBlock .detailRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  .comparisonBlock .detailValue {
+    font-size: 1rem;
+  }
+}
+
+.resultsTable .resultsHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.resultsTable .resultsHeader h2 {
+  margin: 0;
+  color: #21A038;
+}
+.resultsTable .resultsHeader .headerControls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.resultsTable .resultsHeader .scenarioTabs {
+  display: flex;
+  gap: 0.5rem;
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  padding: 0.25rem;
+}
+.resultsTable .resultsHeader .scenarioTabs .tabButton {
+  padding: 0.5rem 1rem;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-weight: 500;
+  color: #6c757d;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.resultsTable .resultsHeader .scenarioTabs .tabButton:hover {
+  background-color: #e9ecef;
+}
+.resultsTable .resultsHeader .scenarioTabs .tabButton.tabActive {
+  background-color: #21A038;
+  color: white;
+}
+.resultsTable .resultsHeader .chartButton {
+  padding: 0.5rem 1rem;
+  background-color: #20c997;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.resultsTable .resultsHeader .chartButton:hover {
+  background-color: #1ba87e;
+}
+.resultsTable .scenarioSummary {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #21A038;
+}
+.resultsTable .scenarioSummary p {
+  margin: 0.5rem 0;
+  font-size: 1rem;
+}
+.resultsTable .scenarioSummary p strong {
+  color: #495057;
+}
+@media (max-width: 768px) {
+  .resultsTable .resultsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .resultsTable .resultsHeader .headerControls {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .resultsTable .scenarioTabs {
+    order: 1;
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+  .resultsTable .chartButton {
+    order: 2;
+  }
+}
+@media (max-width: 480px) {
+  .resultsTable .scenarioTabs {
+    flex-wrap: wrap;
+  }
+  .resultsTable .scenarioTabs .tabButton {
+    flex: 1;
+    text-align: center;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+  }
+}
+
+.chartContainer {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  border: 1px solid #dee2e6;
+}
+.chartContainer h3 {
+  color: #21A038;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+}
+.chartContainer .chartWrapper {
+  overflow-x: auto;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: center;
+}
+.chartContainer .chartWrapper svg {
+  max-width: 100%;
+  height: auto;
+}
+.chartContainer .chartNote {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #6c757d;
+  text-align: center;
+}
+
+.chartPlaceholder {
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+  font-style: italic;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  border: 1px dashed #adb5bd;
 }
 
 /*# sourceMappingURL=Calculator.module.css.map */
