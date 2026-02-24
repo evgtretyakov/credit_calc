@@ -29,6 +29,10 @@ interface InputSectionProps {
   setInterestDefermentMonths: (value: number) => void
   termExtensionMonths: number
   setTermExtensionMonths: (value: number) => void
+  interestDefermentEnabled: boolean
+  setInterestDefermentEnabled: (value: boolean) => void
+  termExtensionEnabled: boolean
+  setTermExtensionEnabled: (value: boolean) => void
   customTermActive: boolean
   setCustomTermActive: (value: boolean) => void
   customTermMonths: number
@@ -64,6 +68,10 @@ const InputSection: React.FC<InputSectionProps> = ({
   setInterestDefermentMonths,
   termExtensionMonths,
   setTermExtensionMonths,
+  interestDefermentEnabled,
+  setInterestDefermentEnabled,
+  termExtensionEnabled,
+  setTermExtensionEnabled,
   customTermActive,
   setCustomTermActive,
   customTermMonths,
@@ -150,10 +158,11 @@ const InputSection: React.FC<InputSectionProps> = ({
             type="number"
             value={minRepaymentPercent}
             onChange={(e) => setMinRepaymentPercent(Number(e.target.value))}
-            min="0"
+            min="10"
             max="100"
             step="1"
           />
+          <div className={styles.hint}>Минимум 10%</div>
         </label>
         <label>
           Отсрочка по основному долгу: {principalDefermentMonths} мес.
@@ -165,26 +174,46 @@ const InputSection: React.FC<InputSectionProps> = ({
             onChange={(e) => setPrincipalDefermentMonths(Number(e.target.value))}
           />
         </label>
-        <label>
-          Отсрочка по процентам: {interestDefermentMonths} мес.
+        <label className={styles.checkboxLabel}>
           <input
-            type="range"
-            min="1"
-            max="12"
-            value={interestDefermentMonths}
-            onChange={(e) => setInterestDefermentMonths(Number(e.target.value))}
+            type="checkbox"
+            checked={interestDefermentEnabled}
+            onChange={(e) => setInterestDefermentEnabled(e.target.checked)}
           />
+          <span>Отсрочка по процентам</span>
         </label>
-        <label>
-          Увеличение срока кредитования: {termExtensionMonths} мес.
+        {interestDefermentEnabled && (
+          <label>
+            Количество месяцев: {interestDefermentMonths}
+            <input
+              type="range"
+              min="1"
+              max="12"
+              value={interestDefermentMonths}
+              onChange={(e) => setInterestDefermentMonths(Number(e.target.value))}
+            />
+          </label>
+        )}
+        <label className={styles.checkboxLabel}>
           <input
-            type="range"
-            min="1"
-            max="24"
-            value={termExtensionMonths}
-            onChange={(e) => setTermExtensionMonths(Number(e.target.value))}
+            type="checkbox"
+            checked={termExtensionEnabled}
+            onChange={(e) => setTermExtensionEnabled(e.target.checked)}
           />
+          <span>Увеличение срока кредитования</span>
         </label>
+        {termExtensionEnabled && (
+          <label>
+            Количество месяцев: {termExtensionMonths}
+            <input
+              type="range"
+              min="1"
+              max="24"
+              value={termExtensionMonths}
+              onChange={(e) => setTermExtensionMonths(Number(e.target.value))}
+            />
+          </label>
+        )}
         <label className={styles.checkboxLabel}>
           <input
             type="checkbox"

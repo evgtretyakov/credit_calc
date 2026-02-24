@@ -22,8 +22,12 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
   const [selectedScenarioIndex, setSelectedScenarioIndex] = useState<number>(0);
   const [chartVisible, setChartVisible] = useState<boolean>(false);
 
-  const displaySchedule = scenario ? scenario.schedule : schedule;
   const hasMultipleScenarios = scenarios.length > 1;
+  const displaySchedule = hasMultipleScenarios
+    ? scenarios[selectedScenarioIndex]?.schedule
+    : scenario
+    ? scenario.schedule
+    : schedule;
 
   const handleShowChart = () => {
     const newVisible = !chartVisible;
@@ -98,7 +102,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
             </tr>
           </thead>
           <tbody>
-            {displaySchedule.slice(0, 12).map((row) => (
+            {displaySchedule.map((row) => (
               <tr key={row.month}>
                 <td>{row.month}</td>
                 <td>{row.interest.toLocaleString('ru-RU')} ₽</td>
@@ -112,7 +116,7 @@ const ResultsTable: React.FC<ResultsTableProps> = ({
         </table>
       </div>
       <p className={styles.tableNote}>
-        Показаны первые 12 месяцев. Всего месяцев: {displaySchedule.length}
+        Всего месяцев: {displaySchedule.length}
       </p>
             </div>)}
     </div>

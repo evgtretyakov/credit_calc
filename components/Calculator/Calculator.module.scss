@@ -152,6 +152,13 @@
     }
   }
 
+  .hint {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    margin-left: 0.5rem;
+  }
+
   @media (max-width: 768px) {
     gap: 1rem;
 

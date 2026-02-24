@@ -38,6 +38,9 @@ export default function Calculator() {
   const [termExtensionMonths, setTermExtensionMonths] = useState<number>(1)
   const [customTermActive, setCustomTermActive] = useState<boolean>(false)
   const [customTermMonths, setCustomTermMonths] = useState<number>(0)
+  // Чекбоксы управления
+  const [interestDefermentEnabled, setInterestDefermentEnabled] = useState<boolean>(true)
+  const [termExtensionEnabled, setTermExtensionEnabled] = useState<boolean>(true)
 
   // Результаты расчета
   const [paymentSchedule, setPaymentSchedule] = useState<ScheduleItem[]>([])
@@ -96,6 +99,25 @@ export default function Calculator() {
     customTermActive,
   ])
 
+  const handleInterestDefermentToggle = (enabled: boolean) => {
+    setInterestDefermentEnabled(enabled)
+    if (!enabled) {
+      setInterestDefermentMonths(0)
+    } else {
+      // Если включаем, устанавливаем 1 месяц, если текущее значение 0
+      setInterestDefermentMonths((prev) => (prev === 0 ? 1 : prev))
+    }
+  }
+
+  const handleTermExtensionToggle = (enabled: boolean) => {
+    setTermExtensionEnabled(enabled)
+    if (!enabled) {
+      setTermExtensionMonths(0)
+    } else {
+      setTermExtensionMonths((prev) => (prev === 0 ? 1 : prev))
+    }
+  }
+
   const handleReset = () => {
     setPrincipal(678000)
     setInterestRate(27.9)
@@ -113,6 +135,9 @@ export default function Calculator() {
     setTermExtensionMonths(1)
     setCustomTermActive(false)
     setCustomTermMonths(0)
+    // Сброс чекбоксов
+    setInterestDefermentEnabled(true)
+    setTermExtensionEnabled(true)
   }
 
   const openStatementModal = () => {
@@ -165,6 +190,10 @@ export default function Calculator() {
             setInterestDefermentMonths={setInterestDefermentMonths}
             termExtensionMonths={termExtensionMonths}
             setTermExtensionMonths={setTermExtensionMonths}
+            interestDefermentEnabled={interestDefermentEnabled}
+            setInterestDefermentEnabled={handleInterestDefermentToggle}
+            termExtensionEnabled={termExtensionEnabled}
+            setTermExtensionEnabled={handleTermExtensionToggle}
             customTermActive={customTermActive}
             setCustomTermActive={setCustomTermActive}
             customTermMonths={customTermMonths}

@@ -17,10 +17,9 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
     return null;
   }
 
-  // Ограничим количество точек для графика (максимум 24 месяца)
-  const maxPoints = 24;
-  const data1 = scenario1Schedule.slice(0, maxPoints);
-  const data2 = scenario2Schedule.slice(0, maxPoints);
+  // Используем все данные для графика
+  const data1 = scenario1Schedule;
+  const data2 = scenario2Schedule;
 
   if (data1.length === 0 && data2.length === 0) {
     return <div className={styles.chartPlaceholder}>Нет данных для графика</div>;
